@@ -74,7 +74,7 @@ class UI_MainWindow(object):  # noqa
         self.doubleSpinBox_bandpass_high.setMinimum(1.0)
         self.doubleSpinBox_bandpass_high.setMaximum(1000.0)
         self.doubleSpinBox_bandpass_high.setSingleStep(1.0)
-        self.doubleSpinBox_bandpass_high.setProperty("value", 40.0)  # Default 40Hz
+        self.doubleSpinBox_bandpass_high.setProperty("value", 58.0)  # Default 58Hz
         self.doubleSpinBox_bandpass_high.setObjectName("doubleSpinBox_bandpass_high")
 
         # CAR

@@ -169,9 +169,9 @@ class ControlGUI_EEG(_ControlGUI):
                 )
             )
         except Exception:
-            # Default to [1, 40] Hz.
+            # Default to [1, 58] Hz.
             self._ui.doubleSpinBox_bandpass_low.setValue(1.0)
-            self._ui.doubleSpinBox_bandpass_high.setValue(40.0)
+            self._ui.doubleSpinBox_bandpass_high.setValue(58.0)
 
         self._ui.doubleSpinBox_bandpass_high.setMinimum(
             self._ui.doubleSpinBox_bandpass_low.value() + 1

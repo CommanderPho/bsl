@@ -28,7 +28,7 @@ def test_scope_eeg():
         assert not hasattr(scope, "_sos")
         assert not hasattr(scope, "_zi_coeff")
         assert not hasattr(scope, "_zi")
-        scope.init_bandpass_filter(low=1.0, high=40.0)
+        scope.init_bandpass_filter(low=1.0, high=58.0)
         assert hasattr(scope, "_sos")
         assert hasattr(scope, "_zi_coeff")
         assert hasattr(scope, "_zi")
