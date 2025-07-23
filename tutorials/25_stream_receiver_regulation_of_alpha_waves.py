@@ -139,8 +139,7 @@ print ((data4 == data3).all(), (timestamps4 == timestamps3).all())
 # second successive acquisition window.
 
 # FFT settings
-winsize_in_samples = \
-    receiver.streams['StreamPlayer'].sample_rate * receiver.winsize
+winsize_in_samples = receiver.streams['StreamPlayer'].sample_rate * receiver.winsize
 sample_spacing = 1./receiver.streams['StreamPlayer'].sample_rate
 frequencies = np.fft.rfftfreq(n=int(winsize_in_samples), d=sample_spacing)
 alpha_band = np.where(np.logical_and(8<=frequencies, frequencies<=13))[0]
