@@ -22,10 +22,22 @@ class StreamViewer:
     ----------
     stream_name : str | None
         Servers' name to connect to. ``None`` will prompt the user.
+    record_dir : str | None
+        Directory to save recordings to. ``None`` leaves the recording
+        directory unset.
+    bp_low : float | None
+        Bandpass filter low cutoff frequency in Hz. ``None`` uses default
+        configuration.
+    bp_high : float | None
+        Bandpass filter high cutoff frequency in Hz. ``None`` uses default
+        configuration.
     """
 
-    def __init__(self, stream_name=None):
+    def __init__(self, stream_name=None, record_dir=None, bp_low=None, bp_high=None):
         self._stream_name = StreamViewer._check_stream_name(stream_name)
+        self._record_dir = record_dir
+        self._bp_low = bp_low
+        self._bp_high = bp_high
 
     def start(self, bufsize=0.2):
         """Connect to the selected amplifier and plot the streamed data.
@@ -51,6 +63,19 @@ class StreamViewer:
             self._scope = ScopeEEG(self._sr, self._stream_name)
             app = QApplication(sys.argv)
             self._ui = ControlGUI_EEG(self._scope)
+            
+            # Apply command line parameters if provided
+            if self._record_dir is not None:
+                self._ui._ui.lineEdit_recording_dir.setText(self._record_dir)
+                self._ui._ui.pushButton_start_recording.setEnabled(True)
+            
+            if self._bp_low is not None and self._bp_high is not None:
+                self._ui._ui.doubleSpinBox_bandpass_low.setValue(self._bp_low)
+                self._ui._ui.doubleSpinBox_bandpass_high.setValue(self._bp_high)
+                self._scope.init_bandpass_filter(low=self._bp_low, high=self._bp_high)
+                self._ui._ui.checkBox_bandpass.setChecked(True)
+                self._scope.apply_bandpass = True
+            
             sys.exit(app.exec_())
         else:
             logger.error(
