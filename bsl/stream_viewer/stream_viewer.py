@@ -75,12 +75,14 @@ class StreamViewer:
             if self._bp_off:
                 self._ui._ui.checkBox_bandpass.setChecked(False)
                 self._scope.apply_bandpass = False
-            elif self._bp_low is not None and self._bp_high is not None:
+                
+            if (self._bp_low is not None) and (self._bp_high is not None):
                 self._ui._ui.doubleSpinBox_bandpass_low.setValue(self._bp_low)
                 self._ui._ui.doubleSpinBox_bandpass_high.setValue(self._bp_high)
-                self._scope.init_bandpass_filter(low=self._bp_low, high=self._bp_high)
-                self._ui._ui.checkBox_bandpass.setChecked(True)
-                self._scope.apply_bandpass = True
+                if not self._bp_off:
+                    self._scope.init_bandpass_filter(low=self._bp_low, high=self._bp_high)
+                    self._ui._ui.checkBox_bandpass.setChecked(True)
+                    self._scope.apply_bandpass = True
             
             sys.exit(app.exec_())
         else:
