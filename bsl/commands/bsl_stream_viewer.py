@@ -35,12 +35,18 @@ def run():
         metavar="float",
         help="bandpass filter high cutoff frequency in Hz.",
     )
+    parser.add_argument(
+        "--bp_off",
+        action="store_true",
+        help="disable bandpass filtering (equivalent to unchecking bandpass filter box).",
+    )
 
     args = parser.parse_args()
     stream_name = args.stream_name
     record_dir = args.record_dir
     bp_low = args.bp_low
     bp_high = args.bp_high
+    bp_off = args.bp_off
 
-    stream_viewer = StreamViewer(stream_name, record_dir=record_dir, bp_low=bp_low, bp_high=bp_high)
+    stream_viewer = StreamViewer(stream_name, record_dir=record_dir, bp_low=bp_low, bp_high=bp_high, bp_off=bp_off)
     stream_viewer.start()
