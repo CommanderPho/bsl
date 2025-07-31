@@ -68,22 +68,26 @@ class StreamViewer:
             self._ui = ControlGUI_EEG(self._scope)
             
             # Apply command line parameters if provided
-            if self._record_dir is not None:
-                self._ui._ui.lineEdit_recording_dir.setText(self._record_dir)
-                self._ui._ui.pushButton_start_recording.setEnabled(True)
+
             
             if self._bp_off:
-                self._ui._ui.checkBox_bandpass.setChecked(False)
+                print(f'bandpass disabled!')
+                # self._ui._ui.checkBox_bandpass.setChecked(False) ## already false, don't trigger updates
                 self._scope.apply_bandpass = False
-                
-            if (self._bp_low is not None) and (self._bp_high is not None):
-                self._ui._ui.doubleSpinBox_bandpass_low.setValue(self._bp_low)
-                self._ui._ui.doubleSpinBox_bandpass_high.setValue(self._bp_high)
-                if not self._bp_off:
+            else:
+                ## ignore the bp low and high                
+                if (self._bp_low is not None) and (self._bp_high is not None):
+                    self._ui._ui.doubleSpinBox_bandpass_low.setValue(self._bp_low)
+                    self._ui._ui.doubleSpinBox_bandpass_high.setValue(self._bp_high)
                     self._scope.init_bandpass_filter(low=self._bp_low, high=self._bp_high)
                     self._ui._ui.checkBox_bandpass.setChecked(True)
                     self._scope.apply_bandpass = True
             
+
+            if self._record_dir is not None:
+                self._ui._ui.lineEdit_recording_dir.setText(self._record_dir)
+                # self._ui._ui.pushButton_start_recording.setEnabled(True)
+
             sys.exit(app.exec_())
         else:
             logger.error(

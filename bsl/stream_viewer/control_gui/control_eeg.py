@@ -21,9 +21,9 @@ class ControlGUI_EEG(_ControlGUI):
     %(viewer_scope)s
     """
 
-    def __init__(self, scope):
+    def __init__(self, scope, config_file = "settings_scope_eeg.ini"):
         super().__init__(scope)
-        config_file = "settings_scope_eeg.ini"
+        
 
         self._load_configuration(config_file)
         self._load_gui()
@@ -89,13 +89,18 @@ class ControlGUI_EEG(_ControlGUI):
         """Load default configuration for the ranges."""
         logger.debug("Loading configuration..")
 
-        path2settings_folder = Path(__file__).parent / "settings"
-        logger.debug("Configuration folder is '%s'.", path2settings_folder)
+        if isinstance(file, str):
+            path2settings_folder = Path(__file__).parent / "settings"
+            logger.debug("Configuration folder is '%s'.", path2settings_folder)
+            full_file_path = str(path2settings_folder / file)
+        else:
+            full_file_path = file.as_posix()
+
         logger.debug("Configuration file is '%s'.", file)
         scope_settings = RawConfigParser(
             allow_no_value=True, inline_comment_prefixes=("#", ";")
         )
-        scope_settings.read(str(path2settings_folder / file))
+        scope_settings.read(full_file_path)
 
         # yRange (amplitude)
         self._yRanges = {
@@ -133,11 +138,20 @@ class ControlGUI_EEG(_ControlGUI):
 
     def _set_configuration(self, file):
         """Load and set a default configuration for the GUI."""
-        path2settings_folder = Path(__file__).parent / "settings"
+        if isinstance(file, str):
+            path2settings_folder = Path(__file__).parent / "settings"
+            logger.debug("Configuration folder is '%s'.", path2settings_folder)
+            full_file_path = str(path2settings_folder / file)
+        else:
+            full_file_path = file.as_posix()
+
+
+
+
         scope_settings = RawConfigParser(
             allow_no_value=True, inline_comment_prefixes=("#", ";")
         )
-        scope_settings.read(str(path2settings_folder / file))
+        scope_settings.read(full_file_path)
 
         # yRange
         init_idx = list(self._yRanges.values()).index(self._yRange)
