@@ -86,7 +86,7 @@ class StreamViewer:
 
             if self._record_dir is not None:
                 self._ui._ui.lineEdit_recording_dir.setText(self._record_dir)
-                # self._ui._ui.pushButton_start_recording.setEnabled(True)
+                self._ui._ui.pushButton_start_recording.setEnabled(True) ## does not start a recording, only enables the button as it would when the user manually selects a recording path
 
             sys.exit(app.exec_())
         else:
