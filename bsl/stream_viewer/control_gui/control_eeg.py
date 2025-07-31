@@ -150,8 +150,9 @@ class ControlGUI_EEG(_ControlGUI):
             self._ui.spinBox_signal_xRange.setValue(10)
 
         # BP Filters
+        enable_bandpass: bool = bool(int(scope_settings.get("filtering", "apply_bandpass")))
         self._ui.checkBox_bandpass.setChecked(
-            bool(int(scope_settings.get("filtering", "apply_bandpass")))
+            enable_bandpass
         )
         try:
             self._ui.doubleSpinBox_bandpass_low.setValue(
@@ -179,10 +180,12 @@ class ControlGUI_EEG(_ControlGUI):
         self._ui.doubleSpinBox_bandpass_low.setMaximum(
             self._ui.doubleSpinBox_bandpass_high.value() - 1
         )
-        self._scope.init_bandpass_filter(
-            low=self._ui.doubleSpinBox_bandpass_low.value(),
-            high=self._ui.doubleSpinBox_bandpass_high.value(),
-        )
+        if enable_bandpass:
+            self._scope.init_bandpass_filter(
+                low=self._ui.doubleSpinBox_bandpass_low.value(),
+                high=self._ui.doubleSpinBox_bandpass_high.value(),
+            )
+
 
         # CAR
         try:
