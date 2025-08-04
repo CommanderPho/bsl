@@ -184,3 +184,9 @@ for all kind of triggers.
 # Copyright and license
 The codes are released under
 [GNU Lesser General Public License](https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html).
+
+
+
+## PHO TODO 2025-08-04
+- [ ] IMPORTANT: Currently the recording start date (`data.info['meas_date']`) isn't set for recordings created with BSL Stream Viewer meaning they only contain relative timing information, which seems crazy to me.
+
