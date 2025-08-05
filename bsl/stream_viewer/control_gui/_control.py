@@ -17,6 +17,8 @@ class _metaclass_ControlGUI(type(QMainWindow), type(ABC)):
 class _ControlGUI(QMainWindow, ABC, metaclass=_metaclass_ControlGUI):
     """Class representing a base controller GUI.
 
+    Internally holds a reference in `self._recorder` to a `StreamRecorder` instance while recording
+    
     Parameters
     ----------
     %(viewer_scope)s

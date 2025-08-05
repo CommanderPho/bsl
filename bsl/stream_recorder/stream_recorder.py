@@ -261,6 +261,9 @@ class _Recorder:  # noqa
     Class creating the .pcl files, recording data through a StreamReceiver and
     saving the data in the .pcl and .fif files.
 
+    Internally uses a `StreamReceiver`
+
+
     Parameters
     ----------
     %(recorder_record_dir)s
