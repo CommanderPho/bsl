@@ -301,7 +301,7 @@ class _Recorder:  # noqa
 
     def record(self):
         """Instantiate a StreamReceiver, create the files, record and save."""
-        self._recording_start_time = datetime.now(tzinfo=timezone.utc) ## Overwrite the recording start time
+        self._recording_start_time = datetime.now(timezone.utc) ## Overwrite the recording start time
         sr = StreamReceiver(bufsize=MAX_BUF_SIZE, stream_name=self._stream_name)
         pcl_files = _Recorder._create_files(self._record_dir, self._fname, sr)
 
