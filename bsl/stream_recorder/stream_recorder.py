@@ -386,3 +386,20 @@ class _Recorder:  # noqa
         )
 
         return pcl_files
+
+    @staticmethod
+    def extract_datetime_from_filename(filename: str):
+        """ Extract the recording start datetime from the file's filename
+        Examples: 
+        '20250730-195857-Epoc X Motion-raw.fif',
+        '20250730-200710-Epoc X-raw.fif',
+        '20250618-185519-Epoc X-raw.fif',
+        """
+        # Regex for the prefix (8 digits + dash + 6 digits) at the start
+        match = re.match(r'(\d{8})-(\d{6})', filename)
+        if not match:
+            raise ValueError("Filename does not match expected format.")
+
+        date_str, time_str = match.groups()
+        dt = datetime.strptime(date_str + time_str, "%Y%m%d%H%M%S")
+        return dt
