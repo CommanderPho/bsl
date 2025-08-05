@@ -1,4 +1,5 @@
-import datetime
+from datetime import datetime, timezone
+import re
 import multiprocessing as mp
 import os
 import pickle
@@ -293,9 +294,11 @@ class _Recorder:  # noqa
         self._verbose = verbose
         self._eve_file = eve_file
         self._state = state
+        self._recording_start_time = None
 
     def record(self):
         """Instantiate a StreamReceiver, create the files, record and save."""
+        self._recording_start_time = datetime.now(tzinfo=timezone.utc) ## Overwrite the recording start time
         sr = StreamReceiver(bufsize=MAX_BUF_SIZE, stream_name=self._stream_name)
         pcl_files = _Recorder._create_files(self._record_dir, self._fname, sr)
 
@@ -336,6 +339,9 @@ class _Recorder:  # noqa
                 "ch_names": sr.streams[stream].ch_list,
                 "lsl_time_offset": sr.streams[stream].lsl_time_offset,
             }
+
+            if self._recording_start_time is not None:
+                data['meas_date'] = self._recording_start_time 
 
             with open(pcl_files[stream], "wb") as file:
                 pickle.dump(data, file, protocol=pickle.HIGHEST_PROTOCOL)

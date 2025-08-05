@@ -150,6 +150,8 @@ def _format_pcl_to_mne_RawArray(data):
 
     # create Raw object
     raw = mne.io.RawArray(signals, info)
+    if 'meas_date' in data:
+        raw.info.set_meas_date(data['meas_date'])
 
     return raw
 
