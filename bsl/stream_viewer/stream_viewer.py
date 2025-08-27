@@ -35,12 +35,13 @@ class StreamViewer:
         Disable bandpass filtering (equivalent to unchecking bandpass filter box).
     """
 
-    def __init__(self, stream_name=None, record_dir=None, bp_low=None, bp_high=None, bp_off=False):
+    def __init__(self, stream_name=None, record_dir=None, bp_low=None, bp_high=None, bp_off=False, CAR_off=False):
         self._stream_name = StreamViewer._check_stream_name(stream_name)
         self._record_dir = record_dir
         self._bp_low = bp_low
         self._bp_high = bp_high
         self._bp_off = bp_off
+        self._CAR_off = CAR_off
 
     def start(self, bufsize=0.2):
         """Connect to the selected amplifier and plot the streamed data.
@@ -68,8 +69,6 @@ class StreamViewer:
             self._ui = ControlGUI_EEG(self._scope)
             
             # Apply command line parameters if provided
-
-            
             if self._bp_off:
                 print(f'bandpass disabled!')
                 # self._ui._ui.checkBox_bandpass.setChecked(False) ## already false, don't trigger updates
@@ -83,10 +82,13 @@ class StreamViewer:
                     self._ui._ui.checkBox_bandpass.setChecked(True)
                     self._scope.apply_bandpass = True
             
-
             if self._record_dir is not None:
                 self._ui._ui.lineEdit_recording_dir.setText(self._record_dir)
                 self._ui._ui.pushButton_start_recording.setEnabled(True) ## does not start a recording, only enables the button as it would when the user manually selects a recording path
+
+            if self._CAR_off is not None:
+                self._scope.apply_car = (not self._CAR_off) 
+                self._ui._ui.checkBox_car.setChecked((not self._CAR_off)) ## Update UI
 
             sys.exit(app.exec_())
         else:

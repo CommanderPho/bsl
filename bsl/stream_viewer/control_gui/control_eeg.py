@@ -145,9 +145,6 @@ class ControlGUI_EEG(_ControlGUI):
         else:
             full_file_path = file.as_posix()
 
-
-
-
         scope_settings = RawConfigParser(
             allow_no_value=True, inline_comment_prefixes=("#", ";")
         )

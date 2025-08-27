@@ -40,6 +40,11 @@ def run():
         action="store_true",
         help="disable bandpass filtering (equivalent to unchecking bandpass filter box).",
     )
+    parser.add_argument(
+        "--CAR_off",
+        action="store_true",
+        help="disable CAR processing (equivalent to unchecking the CAR box).",
+    )
 
     args = parser.parse_args()
     stream_name = args.stream_name
@@ -47,6 +52,8 @@ def run():
     bp_low = args.bp_low
     bp_high = args.bp_high
     bp_off = args.bp_off
+    CAR_off = args.CAR_off
+    
 
-    stream_viewer = StreamViewer(stream_name, record_dir=record_dir, bp_low=bp_low, bp_high=bp_high, bp_off=bp_off)
+    stream_viewer = StreamViewer(stream_name, record_dir=record_dir, bp_low=bp_low, bp_high=bp_high, bp_off=bp_off, CAR_off=CAR_off)
     stream_viewer.start()
