@@ -49,8 +49,9 @@ dependencies = [
     'packaging',
     'psutil',
     "pyinstaller>=6.15.0",
+    "pyqt5>=5.15.11",
     "pyqt5-qt5==5.15.2",
-    'pyqtgraph',
+    "pyqtgraph",
     'scipy',
 ]
 
